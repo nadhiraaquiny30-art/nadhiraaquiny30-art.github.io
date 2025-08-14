@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>coolsweet naaqueny — Ice Cream by Nadhira</title>
+<meta name="theme-color" content="#ff69b4">
+<style>
+  :root{
+    --pink:#ff69b4;
+    --pink-2:#ffa4cf;
+    --sky:#7ecbff;
+    --sky-2:#cfefff;
+    --ink:#243043;
+    --bg:#fff7fb;
+    --card:#ffffff;
+    --shadow:0 10px 30px rgba(36,48,67,.12);
+    --radius:18px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;font-family:ui-rounded, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";color:var(--ink);background:
+    radial-gradient(1200px 800px at -10% -10%, var(--sky-2), transparent 60%),
+    radial-gradient(1000px 700px at 110% -10%, #ffd9ec, transparent 55%),
+    radial-gradient(900px 600px at 50% 120%, #e7f6ff, transparent 60%), var(--bg);}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+  button{cursor:pointer;border:0;border-radius:12px;padding:.8rem 1rem;font-weight:700}
+  .btn{background:linear-gradient(135deg,var(--pink),#ff85c7);color:#fff;box-shadow:var(--shadow)}
+  .btn.alt{background:linear-gradient(135deg,var(--sky),#5db8ff);color:#00223e}
+  .btn.ghost{background:#fff;border:2px solid var(--pink);color:var(--pink)}
+  .container{max-width:1100px;margin:0 auto;padding:1.25rem}
+  /* header */
+  header{position:sticky;top:0;z-index:50;backdrop-filter:saturate(1.3) blur(8px);
+    background:linear-gradient(90deg, rgba(255,105,180,.85), rgba(126,203,255,.85));}
+  .nav{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+  .brand{display:flex;align-items:center;gap:.75rem;font-weight:900;font-size:1.1rem;color:#fff}
+  .brand .logo{width:42px;height:42px;border-radius:50%;
+    background:conic-gradient(from 210deg at 50% 50%, var(--pink), var(--sky));box-shadow:0 6px 18px rgba(0,0,0,.15)}
+  .links{display:flex;gap:1rem;align-items:center}
+  .links a{color:#fff;font-weight:700;opacity:.95}
+  .cart-pill{position:relative}
+  .badge{position:absolute;right:-8px;top:-8px;background:#fff;color:#ff2a93;font-size:.7rem;
+    padding:.15rem .45rem;border-radius:999px;border:2px solid #fff;min-width:20px;text-align:center}
+  /* hero slider */
+  .hero{position:relative;margin-top:1rem}
+  .slider{position:relative;overflow:hidden;border-radius:22px;box-shadow:var(--shadow)}
+  .slides{display:flex;transition:transform .7s cubic-bezier(.22,.8,.2,1);}
+  .slide{min-width:100%;position:relative;height:380px;background:#fff}
+  .slide::after{content:"";position:absolute;inset:0;background:
+    linear-gradient(180deg, rgba(0,0,0,.00), rgba(0,0,0,.25));opacity:.25}
+  .slide .caption{position:absolute;left:20px;bottom:20px;color:#fff;z-index:2;
+    font-weight:900;font-size:clamp(18px,3.2vw,28px);text-shadow:0 6px 18px rgba(0,0,0,.35)}
+  .dots{position:absolute;left:0;right:0;bottom:14px;display:flex;justify-content:center;gap:8px;z-index:3}
+  .dot{width:10px;height:10px;border-radius:999px;background:rgba(255,255,255,.7)}
+  .dot.active{width:26px;background:#fff}
+  .arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:3;background:rgba(255,255,255,.85);border-radius:999px;
+    width:40px;height:40px;display:grid;place-items:center;font-weight:900;color:#333}
+  .arrow.left{left:10px}.arrow.right{right:10px}
+  /* promo strip */
+  .promo{margin:16px 0;display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap}
+  .promo .tag{background:#fff;border:2px dashed var(--pink);color:#ff2a93;border-radius:999px;padding:.4rem .8rem;font-weight:800}
+  .timer{font-weight:900;color:#0b66a9;background:#e8f5ff;border-radius:999px;padding:.4rem .8rem}
+  /* products */
+  h2.section{font-size:clamp(22px,3.4vw,30px);margin:28px 8px 12px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+  .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column}
+  .thumb{height:160px;background:#f9e3f0;display:grid;place-items:center;position:relative}
+  .thumb .cone{width:110px;height:110px;border-radius:22px;
+    background:linear-gradient(145deg,#fff,#ffe6f3);box-shadow: inset 0 8px 30px rgba(255,105,180,.25)}
+  .thumb.sky{background:#e8f6ff}
+  .info{padding:14px 14px 12px}
+  .title{font-weight:900}
+  .price{font-weight:900;color:#ff2a93}
+  .actions{display:flex;gap:8px;margin-top:10px}
+  .chip{font-size:.8rem;background:#fff;border:1px solid #eee;color:#666;padding:.2rem .5rem;border-radius:999px;margin-right:6px}
+  /* cart drawer */
+  .drawer{position:fixed;right:-420px;top:0;width:360px;max-width:90vw;height:100dvh;background:#fff;box-shadow: -18px 0 40px rgba(0,0,0,.18);
+    padding:18px 14px;transition:right .4s ease;z-index:60}
+  .drawer.open{right:0}
+  .drawer h3{margin:4px 0 10px}
+  .cart-list{display:grid;gap:10px;max-height:55vh;overflow:auto;padding-right:4px}
+  .row{display:flex;align-items:center;justify-content:space-between;background:#fafafa;border-radius:12px;padding:8px 10px;border:1px solid #eee}
+  .qty{display:flex;align-items:center;gap:6px}
+  .qty button{width:28px;height:28px;border-radius:8px;background:#f1f1f1}
+  .sum{display:flex;align-items:center;justify-content:space-between;margin-top:10px;padding-top:10px;border-top:1px dashed #eee;font-weight:800}
+  .promo-input{display:flex;gap:6px;margin-top:10px}
+  .mini{font-size:.78rem;color:#6a7790}
+  /* checkout modal */
+  .modal{position:fixed;inset:0;background:rgba(0,0,0,.4);display:none;align-items:center;justify-content:center;z-index:70;padding:14px}
+  .modal.open{display:flex}
+  .sheet{background:#fff;border-radius:20px;box-shadow:var(--shadow);width:min(560px,96vw);padding:18px}
+  .form{display:grid;gap:10px;margin-top:8px}
+  .field{display:grid;gap:6px}
+  input,select,textarea{padding:.75rem .9rem;border:1.5px solid #e5e7eb;border-radius:12px;font:inherit}
+  textarea{min-height:90px;resize:vertical}
+  .sheet .row{border:0;padding:0;background:none}
+  /* confetti sprinkles */
+  .sprinkle{position:fixed;pointer-events:none;width:8px;height:8px;border-radius:2px;transform:rotate(15deg);opacity:0;animation:pop 800ms ease forwards}
+  @keyframes pop{0%{opacity:0;transform:translateY(-6px) scale(.6)}40%{opacity:1}100%{opacity:0;transform:translateY(20px) rotate(25deg) scale(1)}}
+  /* footer */
+  footer{margin-top:32px;padding:28px 16px;text-align:center;background:
+    linear-gradient(90deg, rgba(255,105,180,.18), rgba(126,203,255,.18));border-top:1px solid #f2f2f2}
+  /* tiny helpers */
+  .fade-up{opacity:0;transform:translateY(12px);transition:.6s ease}
+  .fade-up.show{opacity:1;transform:none}
+</style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          coolsweet naaqueny<br>
+          <small style="font-weight:600;opacity:.9">by Nadhira Aquiny Pricillia Widodo</small>
+        </div>
+      </div>
+      <div class="links">
+        <a href="#menu">Menu</a>
+        <a href="#about">Tentang</a>
+        <a href="#contact">Kontak</a>
+        <a class="cart-pill" href="javascript:void(0)" id="openCart" aria-label="Buka keranjang">
+          🛒 <span class="badge" id="cartBadge">0</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO / SLIDER -->
+  <section class="container hero fade-up">
+    <div class="slider" id="slider">
+      <div class="slides" id="slides">
+        <!-- Ganti src di bawah dengan gambar kamu di folder assets/ -->
+        <div class="slide">
+          <img src="assets/slide1.jpg" alt="Strawberry swirl">
+          <div class="caption">Strawberry Swirl • manis & segar</div>
+        </div>
+        <div class="slide">
+          <img src="assets/slide2.jpg" alt="Blue sky vanilla">
+          <div class="caption">Blue Sky Vanilla • lembut di lidah</div>
+        </div>
+        <div class="slide">
+          <img src="assets/slide3.jpg" alt="Pink berry sundae">
+          <div class="caption">Pink Berry Sundae • favorit semua usia</div>
+        </div>
+      </div>
+      <button class="arrow left" id="prev">‹</button>
+      <button class="arrow right" id="next">›</button>
+      <div class="dots" id="dots"></div>
+    </div>
+    <div class="promo">
+      <span class="tag">Kode: <b>SWEET20</b> (−20%)</span>
+      <span class="timer">Berakhir dalam <b id="countdown">—:—:—</b></span>
+    </div>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section id="menu" class="container">
+    <h2 class="section">Menu Es Krim Favorit</h2>
+    <div class="grid">
+      <!-- Card 1 -->
+      <article class="card fade-up">
+        <div class="thumb"><div class="cone"></div></div>
+        <div class="info">
+          <div class="title">Strawberry Dream</div>
+          <div class="mini">Cup • Topping: marshmallow</div>
+          <div class="chip">Pink</div><div class="chip">Sweet</div>
+          <div class="row" style="margin-top:10px;">
+            <span class="price">Rp28.000</span>
+            <div class="actions">
+              <button class="btn alt" data-add data-id="ic-1" data-name="Strawberry Dream" data-price="28000">Tambah</button>
+            </div>
+          </div>
+        </div>
+      </article>
+      <!-- Card 2 -->
+      <article class="card fade-up">
+        <div class="thumb sky"><div class="cone"></div></div>
+        <div class="info">
+          <div class="title">Blue Vanilla Cloud</div>
+          <div class="mini">Cone • Topping: choco chips</div>
+          <div class="chip">Sky Blue</div><div class="chip">Creamy</div>
+          <div class="row" style="margin-top:10px;">
+            <span class="price">Rp26.000</span>
+            <div class="actions">
+              <button class="btn alt" data-add data-id="ic-2" data-name="Blue Vanilla Cloud" data-price="26000">Tambah</button>
+            </div>
+          </div>
+        </div>
+      </article>
+      <!-- Card 3 -->
+      <article class="card fade-up">
+        <div class="thumb"><div class="cone"></div></div>
+        <div class="info">
+          <div class="title">Pink Berry Sundae</div>
+          <div class="mini">Cup • Topping: strawberry bits</div>
+          <div class="chip">Pink</div><div class="chip">Fresh</div>
+          <div class="row" style="margin-top:10px;">
+            <span class="price">Rp32.000</span>
+            <div class="actions">
+              <button class="btn alt" data-add data-id="ic-3" data-name="Pink Berry Sundae" data-price="32000">Tambah</button>
+            </div>
+          </div>
+        </div>
+      </article>
+      <!-- Card 4 -->
+      <article class="card fade-up">
+        <div class="thumb sky"><div class="cone"></div></div>
+        <div class="info">
+          <div class="title">Cotton Candy Twist</div>
+          <div class="mini">Cone • Topping: cotton candy</div>
+          <div class="chip">Sky</div><div class="chip">Light</div>
+          <div class="row" style="margin-top:10px;">
+            <span class="price">Rp24.000</span>
+            <div class="actions">
+              <button class="btn alt" data-add data-id="ic-4" data-name="Cotton Candy Twist" data-price="24000">Tambah</button>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="container fade-up">
+    <h2 class="section">Tentang coolsweet naaqueny</h2>
+    <p>Kedai es krim modern milik <b>Nadhira Aquiny Pricillia Widodo</b> — manisnya pink berpadu segarnya sky blue.
+      Semua dibuat fresh dengan bahan premium dan full senyum. 🍦✨</p>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="container fade-up">
+    <h2 class="section">Kontak</h2>
+    <p>DM kami di Instagram atau WhatsApp untuk pemesanan custom party pack.</p>
+  </section>
+
+  <!-- CART DRAWER -->
+  <aside class="drawer" id="drawer">
+    <div class="row" style="justify-content:space-between;align-items:center">
+      <h3>Ke
